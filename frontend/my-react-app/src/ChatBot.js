@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-// Replace these with your own images or local assets
+
 const BOT_AVATAR_URL = process.env.PUBLIC_URL + "/arijit pic.jpeg";
 const USER_AVATAR_URL = process.env.PUBLIC_URL + "/you pic.jpeg";
 
@@ -12,7 +12,7 @@ function MyApp() {
   const [typing, setTyping] = useState(false);
   const chatRef = useRef(null);
 
-  // On mount, create/retrieve sessionId, then check if we should greet
+
   useEffect(() => {
     let sessionId = localStorage.getItem('chatSessionId');
     if (!sessionId) {
@@ -20,7 +20,7 @@ function MyApp() {
       localStorage.setItem('chatSessionId', sessionId);
     }
 
-    // Greet user if session is new
+
     const fetchGreeting = async () => {
       try {
         const res = await axios.get(
@@ -37,14 +37,14 @@ function MyApp() {
     fetchGreeting();
   }, []);
 
-  // Scroll to bottom on new messages
+
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [messages]);
 
-  // Helper: add user message
+
   const addUserMessage = (text) => {
     const timeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     setMessages((prev) => [
@@ -84,7 +84,7 @@ function MyApp() {
     }
   };
 
-  // "Start Over" => reset session
+
   const handleStartOver = async () => {
     try {
       const sessionId = localStorage.getItem('chatSessionId');
@@ -92,7 +92,7 @@ function MyApp() {
         `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/message?sessionId=${sessionId}`,
         { text: 'start over' }
       );
-      // Clear messages, show returned text
+
       setMessages([
         {
           role: 'bot',

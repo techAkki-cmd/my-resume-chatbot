@@ -28,13 +28,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-/**
- * ChatController ensuring:
- *  1) Immediate greeting before any user message (via /greeting endpoint).
- *  2) "start over" only returns "I've cleared our conversation..." with no extra greeting.
- *  3) Full multi-turn memory, session-based conversation, visited flags, etc.
- *  4) AI JSON is parsed server-side so the frontend gets plain text.
- */
+
 @RestController
 @RequestMapping("/api/chat")
 @CrossOrigin(origins = "https://arijit-resume-bot.netlify.app")
@@ -75,10 +69,7 @@ public class ChatController {
         this.honorsService = honorsService;
     }
 
-    /**
-     * 1) The frontend calls this right when the user arrives.
-     * 2) If the session is truly new (no conversation), we greet. Otherwise, return "" (no greeting).
-     */
+
     @GetMapping("/greeting")
     public ResponseEntity<String> getGreeting(@RequestParam String sessionId) {
         ChatSession chatSession = sessionService.getOrCreateSession(sessionId);
@@ -93,10 +84,7 @@ public class ChatController {
         }
     }
 
-    /**
-     * Handles all user messages. If "start over," we only return "I've cleared our conversation..."
-     * with no extra greeting. Otherwise, we do the usual flow, referencing prior session state.
-     */
+
     @PostMapping("/message")
     public ResponseEntity<String> handleMessage(
             @RequestBody ChatMessage message,
@@ -105,13 +93,13 @@ public class ChatController {
         ChatSession chatSession = sessionService.getOrCreateSession(sessionId);
         String userText = message.getText().trim();
 
-        // Check for "start over"
+
         if (userText.equalsIgnoreCase("start over") || userText.equalsIgnoreCase("restart")) {
             sessionService.clearSession(sessionId);
             return ResponseEntity.ok("I've cleared our conversation. Feel free to begin again!");
         }
 
-        // Optionally: "revisit sections" resets visited flags
+
         if (userText.toLowerCase().contains("revisit sections")) {
             chatSession.setHasSeenExperience(false);
             chatSession.setHasSeenProjects(false);
@@ -122,10 +110,10 @@ public class ChatController {
             chatSession.setHasSeenExtraCurricular(false);
         }
 
-        // Record user's message in session
+
         chatSession.addToHistory("User: " + userText);
 
-        // Merge all resume data
+
         String resumeData = buildAllResumeData(
                 experienceService.getAllExperiences(),
                 educationService.getAllEducation(),
@@ -136,9 +124,19 @@ public class ChatController {
                 honorsService.getAllHonors()
         );
 
-        // Build final prompt
+
         String finalPrompt = """
-            You are my personal resume chatbot.you will give responses to the recruiter on behalf of me,the response should engage the recruiter and should be based on the previous converstion as it should engage the recruiter more and adapt to his requirements as discussed or shared in the previous questionsa and convo also the length of the responses should be according to the question and exphasis of the recruiter(not more than 7-8 lines) and the responses can contain bullet points, paragarph or anything that suits the response better but not look like hotch potch.
+You are a helpful and professional AI assistant representing Arijit Ajay Kumar, an engineering graduate. Your job is to respond politely and intelligently to recruiters or professionals who ask about Arijit's background, resume, skills, projects, or achievements.
+
+Always reply in a formal, concise, and respectful tone. Highlight key skills and accomplishments clearly. Keep responses friendly but not casual. If a recruiter asks about experience or qualifications, use the resume data to answer directly and accurately.
+
+If a question is unrelated to jobs, engineering, or professional topics, politely steer the conversation back to the relevant domain.
+
+Refer to Arijit in the first person ("i have experience in...", "i am profficient  proficient in...") as if Arijit is responding.
+
+Keep answers between 1–5 lines short paragraphs max, unless more detail is specifically requested or reqiured in the answer.
+
+Stay professional, and aim to make a great impression of Arijit.
 
             Conversation so far:
             %s
@@ -153,23 +151,20 @@ public class ChatController {
                 resumeData
         );
 
-        // Call AI
+
         String aiJson = aiService.getAIResponse(finalPrompt);
 
-        // Parse to plain text
+
         String plainResponse = parseGeminiJson(aiJson);
 
-        // Add bot answer to session
+
         chatSession.addToHistory("Bot: " + plainResponse);
 
-        // Return only the plain text to the frontend
+
         return ResponseEntity.ok(plainResponse);
     }
 
-    /**
-     * Builds a single text block from all your resume tables (Experience, etc.).
-     * Adjust field names to match your actual model classes.
-     */
+
     private String buildAllResumeData(
             List<Experience> experiences,
             List<Education> educationList,
@@ -280,10 +275,7 @@ public class ChatController {
         return sb.toString();
     }
 
-    /**
-     * Extracts text from Gemini JSON so the frontend sees plain text only.
-     * If the structure isn't recognized, we fallback to raw JSON.
-     */
+
     private String parseGeminiJson(String json) {
         try {
             JsonNode root = mapper.readTree(json);
@@ -302,6 +294,6 @@ public class ChatController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return json; // fallback if parse fails
+        return json;
     }
 }
