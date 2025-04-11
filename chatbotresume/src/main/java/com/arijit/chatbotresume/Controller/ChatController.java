@@ -37,7 +37,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/chat")
-@CrossOrigin
+@CrossOrigin(origins = "https://arijit-resume-bot.netlify.app")
 public class ChatController {
 
     private final AIService aiService;

@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37cee50e-44c5-4195-9349-ff9c99aaf3ea" name="Changes" comment="final production setup">
-      <change afterPath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Config/CorsConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/my-react-app/src/ChatBot.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/my-react-app/src/ChatBot.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -271,7 +272,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744394666257</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="final production setup">
+      <option name="closed" value="true" />
+      <created>1744396392432</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1744396392432</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

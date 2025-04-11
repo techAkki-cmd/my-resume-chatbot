@@ -24,7 +24,7 @@ function MyApp() {
     const fetchGreeting = async () => {
       try {
         const res = await axios.get(
-           `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/greeting?sessionId=${sessionId}`
+         https://my-resume-chatbot-production-e008.up.railway.app/api/chat/greeting?sessionId=${sessionId}`
         );
         if (res.data.trim()) {
           addBotMessage(res.data);
@@ -71,7 +71,7 @@ function MyApp() {
     try {
       const sessionId = localStorage.getItem('chatSessionId');
       const response = await axios.post(
-         `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/greeting?sessionId=${sessionId}`
+       https://my-resume-chatbot-production-e008.up.railway.app/api/chat/message?sessionId=${sessionId}`
         { text: userInput }
       );
       addBotMessage(response.data || 'No response found.');
@@ -89,7 +89,7 @@ function MyApp() {
     try {
       const sessionId = localStorage.getItem('chatSessionId');
       const response = await axios.post(
-         `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/message?sessionId=${sessionId}`
+       https://my-resume-chatbot-production-e008.up.railway.app/api/chat/message?sessionId=${sessionId}`
         { text: 'start over' }
       );
       // Clear messages, show returned text
