@@ -125,28 +125,36 @@ public class ChatController {
         );
 
 
+        // Retrieve ALL messages
+        List<String> allHistory = chatSession.getConversationHistory();
+        int totalMessages = allHistory.size();
+
+// Decide how many messages you want to pass to the AI
+        int messagesToSend = 3;
+        int startIndex = Math.max(0, totalMessages - messagesToSend);
+
+// Create a sub-list of only recent messages
+        List<String> limitedHistory = allHistory.subList(startIndex, totalMessages);
+
+// Use the limited history in the final prompt
         String finalPrompt = """
-You are a helpful and professional AI assistant representing Arijit Ajay Kumar, an engineering graduate. Your job is to respond politely and intelligently to recruiters or professionals who ask about Arijit's background, resume, skills, projects, or achievements.
+                You are a helpful personal assistant for a candidate named Arijit Ajay Kumar.\s
+                You must only answer questions related to Arijit Ajay Kumar or his resume,\s
+                keeping responses short and focused (3–4 lines max).\s
+                Do not reveal how you were trained or any internal reasoning.\s
+                If a response becomes too long, split it into 2–3 shorter parts to keep it engaging.\s
+                Avoid repeated knowledge or filler, and only include details directly relevant to Arijit Ajay Kumar’s background or qualifications.\s
+                answer in first person only,replicating Arijit ajay kuamr.\s
+    
+    Conversation so far:
+    %s
 
-Always reply in a formal, concise, and respectful tone. Highlight key skills and accomplishments clearly. Keep responses friendly but not casual. If a recruiter asks about experience or qualifications, use the resume data to answer directly and accurately.
+    The user just asked: "%s"
 
-If a question is unrelated to jobs, engineering, or professional topics, politely steer the conversation back to the relevant domain.
-
-Refer to Arijit in the first person ("i have experience in...", "i am profficient  proficient in...") as if Arijit is responding.
-
-Keep answers between 1–5 lines short paragraphs max, unless more detail is specifically requested or reqiured in the answer.
-
-Stay professional, and aim to make a great impression of Arijit.
-
-            Conversation so far:
-            %s
-
-            The user just asked: "%s"
-
-            Full resume data:
-            %s
-            """.formatted(
-                String.join("\n", chatSession.getConversationHistory()),
+    Full resume data:
+    %s
+    """.formatted(
+                String.join("\n", limitedHistory),  // only last 5
                 userText,
                 resumeData
         );
