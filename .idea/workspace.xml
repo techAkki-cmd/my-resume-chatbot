@@ -8,6 +8,11 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Controller/ChatController.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Controller/ChatController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Model/ChatSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Model/ChatSession.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Service/AIService.java" beforeDir="false" afterPath="$PROJECT_DIR$/chatbotresume/src/main/java/com/arijit/chatbotresume/Service/AIService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/my-react-app/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/my-react-app/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/my-react-app/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/my-react-app/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/my-react-app/src/ChatBot.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/my-react-app/src/ChatBot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/my-react-app/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/my-react-app/src/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -311,7 +316,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744400144718</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="final production setup">
+      <option name="closed" value="true" />
+      <created>1744475281830</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1744475281830</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

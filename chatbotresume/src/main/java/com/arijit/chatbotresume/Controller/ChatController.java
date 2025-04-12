@@ -125,18 +125,18 @@ public class ChatController {
         );
 
 
-        // Retrieve ALL messages
+
         List<String> allHistory = chatSession.getConversationHistory();
         int totalMessages = allHistory.size();
 
-// Decide how many messages you want to pass to the AI
+
         int messagesToSend = 3;
         int startIndex = Math.max(0, totalMessages - messagesToSend);
 
-// Create a sub-list of only recent messages
+
         List<String> limitedHistory = allHistory.subList(startIndex, totalMessages);
 
-// Use the limited history in the final prompt
+
         String finalPrompt = """
                 You are a helpful personal assistant for a candidate named Arijit Ajay Kumar.\s
                 You must only answer questions related to Arijit Ajay Kumar or his resume,\s

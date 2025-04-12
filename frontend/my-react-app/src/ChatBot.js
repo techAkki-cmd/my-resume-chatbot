@@ -2,11 +2,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-
 const BOT_AVATAR_URL = process.env.PUBLIC_URL + "/arijit pic.jpeg";
 const USER_AVATAR_URL = process.env.PUBLIC_URL + "/you pic.jpeg";
 
-function MyApp() {
+function ChatBot() {
   const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState('');
   const [typing, setTyping] = useState(false);
@@ -24,7 +23,7 @@ function MyApp() {
     const fetchGreeting = async () => {
       try {
         const res = await axios.get(
-        `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/greeting?sessionId=${sessionId}`
+          `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/greeting?sessionId=${sessionId}`
         );
         if (res.data.trim()) {
           addBotMessage(res.data);
@@ -33,7 +32,6 @@ function MyApp() {
         console.error('Greeting error:', err);
       }
     };
-
     fetchGreeting();
   }, []);
 
@@ -44,25 +42,16 @@ function MyApp() {
     }
   }, [messages]);
 
-
   const addUserMessage = (text) => {
     const timeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    setMessages((prev) => [
-      ...prev,
-      { role: 'user', content: text, timestamp: timeStamp }
-    ]);
+    setMessages((prev) => [...prev, { role: 'user', content: text, timestamp: timeStamp }]);
   };
 
-  // Helper: add bot message
   const addBotMessage = (text) => {
     const timeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    setMessages((prev) => [
-      ...prev,
-      { role: 'bot', content: text, timestamp: timeStamp }
-    ]);
+    setMessages((prev) => [...prev, { role: 'bot', content: text, timestamp: timeStamp }]);
   };
 
-  // Send user input to the server
   const handleSend = async () => {
     if (!userInput.trim()) return;
     addUserMessage(userInput);
@@ -84,7 +73,6 @@ function MyApp() {
     }
   };
 
-
   const handleStartOver = async () => {
     try {
       const sessionId = localStorage.getItem('chatSessionId');
@@ -92,6 +80,7 @@ function MyApp() {
         `https://my-resume-chatbot-production-e008.up.railway.app/api/chat/message?sessionId=${sessionId}`,
         { text: 'start over' }
       );
+
 
       setMessages([
         {
@@ -105,7 +94,6 @@ function MyApp() {
     }
   };
 
-  // Send on Enter key
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSend();
@@ -113,21 +101,16 @@ function MyApp() {
   };
 
   return (
-    <div style={styles.container}>
-      {/* TOP HEADER */}
+    <div style={styles.pageWrapper}>
+      {/* The entire screen is this chat layout */}
       <div style={styles.header}>
-        <img
-          src={BOT_AVATAR_URL}
-          alt="Bot avatar"
-          style={styles.headerAvatar}
-        />
+        <img src={BOT_AVATAR_URL} alt="Bot avatar" style={styles.headerAvatar} />
         <div style={styles.headerTitle}>
           <h2 style={{ margin: 0, color: '#fff' }}>Arijit Ajay Kumar</h2>
           <span style={{ color: '#ccc' }}>Resume bot</span>
         </div>
       </div>
 
-      {/* MAIN CHAT WINDOW */}
       <div style={styles.chatWindow} ref={chatRef}>
         {messages.map((msg, index) => {
           const isUser = msg.role === 'user';
@@ -169,6 +152,7 @@ function MyApp() {
           );
         })}
 
+        {/* Typing indicator */}
         {typing && (
           <div style={{ display: 'flex', marginBottom: 16 }}>
             <img
@@ -176,19 +160,13 @@ function MyApp() {
               alt="bot"
               style={{ ...styles.msgAvatar, marginRight: 8 }}
             />
-            <div
-              style={{
-                ...styles.bubble,
-                backgroundColor: '#FFF'
-              }}
-            >
+            <div style={{ ...styles.bubble, backgroundColor: '#FFF' }}>
               <div style={styles.bubbleContent}>...</div>
             </div>
           </div>
         )}
       </div>
 
-      {/* INPUT BAR */}
       <div style={styles.inputBar}>
         <input
           style={styles.input}
@@ -197,78 +175,76 @@ function MyApp() {
           onChange={(e) => setUserInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <button style={styles.sendButton} onClick={handleSend}>
-          Send
-        </button>
-        <button style={styles.startOverButton} onClick={handleStartOver}>
-          Start Over
-        </button>
+        <button style={styles.sendButton} onClick={handleSend}>Send</button>
+        <button style={styles.startOverButton} onClick={handleStartOver}>Start Over</button>
       </div>
     </div>
   );
 }
 
 const styles = {
-  container: {
-    // Full-screen dark background
-    width: '100%',
+
+  pageWrapper: {
+    margin: 0,
+    padding: 0,
+    width: '100vw',
     height: '100vh',
     backgroundColor: '#2B3847',
     display: 'flex',
     flexDirection: 'column',
-    margin: 0,
-    overflow: 'hidden'
+    boxSizing: 'border-box',
   },
   header: {
     display: 'flex',
     alignItems: 'center',
-    backgroundColor: '#394B5A',
+    backgroundColor: '#2B3847',
     padding: '10px 20px',
-    flexShrink: 0
+    flexShrink: 0,
+    borderBottom: '1px solid #394B5A',
   },
   headerAvatar: {
     width: 48,
     height: 48,
     borderRadius: '50%',
-    marginRight: 12
+    marginRight: 12,
   },
   headerTitle: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   chatWindow: {
     flex: 1,
+    overflowY: 'auto',
     padding: 20,
-    overflowY: 'auto'
   },
   msgAvatar: {
     width: 40,
     height: 40,
-    borderRadius: '50%'
+    borderRadius: '50%',
   },
   bubble: {
     maxWidth: '60%',
     borderRadius: 8,
-    padding: '10px',
+    padding: 10,
     boxShadow: '0px 2px 6px rgba(0,0,0,0.15)',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   bubbleContent: {
     fontSize: 15,
-    color: '#333'
+    color: '#333',
   },
   timestamp: {
     marginTop: 6,
     fontSize: 12,
     color: '#999',
-    textAlign: 'right'
+    textAlign: 'right',
   },
   inputBar: {
     display: 'flex',
     padding: '10px 20px',
     backgroundColor: '#2B3847',
-    flexShrink: 0
+    borderTop: '1px solid #394B5A',
   },
   input: {
     flex: 1,
@@ -276,7 +252,8 @@ const styles = {
     borderRadius: 4,
     border: '1px solid #ccc',
     fontSize: 14,
-    marginRight: 8
+    marginRight: 8,
+    outline: 'none',
   },
   sendButton: {
     backgroundColor: '#007BFF',
@@ -285,7 +262,7 @@ const styles = {
     borderRadius: 4,
     padding: '10px 16px',
     fontSize: 14,
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   startOverButton: {
     backgroundColor: '#DC3545',
@@ -295,8 +272,8 @@ const styles = {
     padding: '10px 16px',
     fontSize: 14,
     cursor: 'pointer',
-    marginLeft: 8
-  }
+    marginLeft: 8,
+  },
 };
 
-export default MyApp;
+export default ChatBot;

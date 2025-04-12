@@ -58,9 +58,9 @@ public class ChatSession {
     public void addToHistory(String message) {
         conversationHistory.add(message);
 
-        // If total > 10, remove the oldest 5 to keep only last 5
+
         if (conversationHistory.size() > 5) {
-            // Remove the first 5 messages
+
             for (int i = 0; i < 2; i++) {
                 conversationHistory.remove(0);
             }

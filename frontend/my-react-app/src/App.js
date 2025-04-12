@@ -1,10 +1,10 @@
 import React from 'react';
 import ChatBot from './ChatBot';
-
 function App() {
+
   return (
-    <div style={{ margin: 20 }}>
-      <h1>AI-Powered Resume Chatbot</h1>
+    <div style={{ margin: 0, padding: 0 }}>
+
       <ChatBot />
     </div>
   );
