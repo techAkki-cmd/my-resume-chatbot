@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 public class AIService {
 
 
-    private static final String GEMINI_API_KEY = "";
+    private static final String GEMINI_API_KEY = "AIzaSyCQnsrD0B9fwv8JHwG2Qkt4Oa31sReuRlI";
 
 
     private static final String GEMINI_ENDPOINT =
